@@ -17,7 +17,8 @@
 #include "MPU6050Constants.h"
 #include <Wire.h>
 
-int AcX, AcY, AcZ, temp, GyX, GyY, GyZ;
+int AcX, AcY, AcZ, temp, GyX, GyY, GyZ; 
+int valor = 0;
 void setup() {
   AcX = 0;
   AcY = 0;
@@ -26,12 +27,52 @@ void setup() {
   GyX = 0;
   GyY = 0;
   GyZ = 0;
+  Serial.begin(9600);
+  
   Wire.begin();
+  
+  Wire.beginTransmission(MPU);
+  Wire.write(PWR_MGMT_1);
+  Wire.endTransmission(false);
+  Wire.requestFrom(MPU, 1, true);
+  valor = Wire.read();
+  
+  Serial.println("###################################################");
+  Serial.print("PWR_MGMT_1: ");
+  Serial.println(valor);
+  Serial.println("###################################################");
+  
+  
   Wire.beginTransmission(MPU);
   Wire.write(PWR_MGMT_1);
   Wire.write(0);
   Wire.endTransmission(true);
-  Serial.begin(9600);
+  
+
+  
+  Wire.beginTransmission(MPU);
+  Wire.write(WHOAMI);
+  Wire.endTransmission(false);
+  Wire.requestFrom(MPU, 1, true);
+  valor = Wire.read();
+  
+  Serial.println("###################################################");
+  Serial.print("WHOAMI: ");
+  Serial.println(valor);
+  Serial.println("###################################################");
+  
+  Wire.beginTransmission(MPU);
+  Wire.write(ACCEL_CONFIG);
+  Wire.endTransmission(false);
+  Wire.requestFrom(MPU, 1, true);
+  valor = Wire.read();
+  
+  Serial.println("###################################################");
+  Serial.print("ACCEL_CONFIG: ");
+  Serial.println(valor);
+  Serial.println("###################################################");
+
+  
 }
 
 void loop() {
@@ -50,9 +91,9 @@ void loop() {
   Serial.println("Acelerometro: ");
   Serial.print("AcX = ");
   Serial.print(AcX);
-  Serial.print("| AcY = ");
+  Serial.print(" | AcY = ");
   Serial.print(AcY);
-  Serial.print("| AcZ = ");
+  Serial.print(" | AcZ = ");
   Serial.println(AcZ);
   
   Serial.println("Temperatura: ");
@@ -62,9 +103,9 @@ void loop() {
   Serial.println("Giroscopo: ");
   Serial.print("GyX = ");
   Serial.print(GyX);
-  Serial.print("| GyY = ");
+  Serial.print(" | GyY = ");
   Serial.print(GyY);
-  Serial.print("| GyZ = ");
+  Serial.print(" | GyZ = ");
   Serial.println(GyZ);
   delay(333); 
 }

@@ -46,4 +46,13 @@ const int GYRO_Y_OUT_L=0x46;
 const int GYRO_Z_OUT_H=0x47;
 const int GYRO_Z_OUT_L=0x48;
 
-
+/*
+  ACCEL_CONFIG: Este registro contiene la configuracion del acelerometro. Sirve para disparar el self-test de cada eje
+  y para configurar el valor AFS_SEL que se codifica en los bits 4 y 3. El contenido de este campo define el rango
+  maximo del sensor.
+  AFS_SEL = 0 --> +-2g
+  AFS_SEL = 1 --> +-4g
+  AFS_SEL = 2 --> +-8g
+  AFS_SEL = 3 --> +-16g
+*/
+const int ACCEL_CONFIG=0x81;
