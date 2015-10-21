@@ -39,7 +39,7 @@ void setup() {
   
   Serial.println("###################################################");
   Serial.print("PWR_MGMT_1: ");
-  Serial.println(valor);
+  Serial.println(valor, BIN);
   Serial.println("###################################################");
   
   
@@ -58,7 +58,7 @@ void setup() {
   
   Serial.println("###################################################");
   Serial.print("WHOAMI: ");
-  Serial.println(valor);
+  Serial.println(valor,BIN);
   Serial.println("###################################################");
   
   Wire.beginTransmission(MPU);
@@ -69,7 +69,7 @@ void setup() {
   
   Serial.println("###################################################");
   Serial.print("ACCEL_CONFIG: ");
-  Serial.println(valor);
+  Serial.println(valor, BIN);
   Serial.println("###################################################");
 
   
