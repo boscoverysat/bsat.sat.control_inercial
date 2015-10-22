@@ -17,8 +17,14 @@
 #include "MPU6050Constants.h"
 #include <Wire.h>
 
-int AcX, AcY, AcZ, temp, GyX, GyY, GyZ; 
+int temp;
+unsigned int AcX, AcY, AcZ, GyX, GyY, GyZ; 
 int valor = 0;
+unsigned int milsec = 0;
+
+char opt = 'x';
+boolean verbose = true;
+
 void setup() {
   AcX = 0;
   AcY = 0;
@@ -37,11 +43,8 @@ void setup() {
   Wire.requestFrom(MPU, 1, true);
   valor = Wire.read();
   
-  Serial.println("###################################################");
   Serial.print("PWR_MGMT_1: ");
-  Serial.println(valor, BIN);
-  Serial.println("###################################################");
-  
+  Serial.println(valor, BIN);  
   
   Wire.beginTransmission(MPU);
   Wire.write(PWR_MGMT_1);
@@ -56,10 +59,8 @@ void setup() {
   Wire.requestFrom(MPU, 1, true);
   valor = Wire.read();
   
-  Serial.println("###################################################");
   Serial.print("WHOAMI: ");
   Serial.println(valor,BIN);
-  Serial.println("###################################################");
 
   
   Wire.beginTransmission(MPU);
@@ -76,9 +77,6 @@ void setup() {
   valor = valor & FULL_SCALE_MASK;
   valor = valor >> 3;
   print_accelerometer_settings(valor);
-
-
-
   
   Wire.beginTransmission(MPU);
   Wire.write(GYRO_CONFIG);
@@ -91,10 +89,27 @@ void setup() {
   Serial.println(valor, BIN);
   Serial.println("###################################################");
   print_gyro_settings(valor);
+  
+  Serial.println("Pulse [V] para modo verbose");
+  Serial.println("Pulse [C] para modo CSV");
+  while (opt == 'x') {
+    if (Serial.available() != 0) {
+      opt = Serial.read();
+      if (opt == 'v' || opt == 'V') {
+        verbose = true;
+      }
+      else if( opt =='c' || opt == 'C') {
+        verbose = false;
+        Serial.println("millis;AcX;AcY;AcZ;T(Celsius);GyX;GyY;GyZ");
+      }
+    }
+  }
    
 }
 
 void loop() {
+  milsec = millis();
+
   Wire.beginTransmission(MPU);
   Wire.write(ACCEL_XOUT_H);
   Wire.endTransmission(false);
@@ -107,25 +122,46 @@ void loop() {
   GyY = Wire.read() <<8| Wire.read();
   GyZ = Wire.read() <<8| Wire.read();
   
-  Serial.println("Acelerometro: ");
-  Serial.print("AcX = ");
-  Serial.print(AcX);
-  Serial.print(" | AcY = ");
-  Serial.print(AcY);
-  Serial.print(" | AcZ = ");
-  Serial.println(AcZ);
-  
-  Serial.println("Temperatura: ");
-  Serial.print("T= ");
-  Serial.println(temp/340.00+36.53);
-  
-  Serial.println("Giroscopo: ");
-  Serial.print("GyX = ");
-  Serial.print(GyX);
-  Serial.print(" | GyY = ");
-  Serial.print(GyY);
-  Serial.print(" | GyZ = ");
-  Serial.println(GyZ);
+  if (verbose) {
+    Serial.println("Acelerometro: ");
+    Serial.print("AcX = ");
+    Serial.print(AcX);
+    Serial.print(" | AcY = ");
+    Serial.print(AcY);
+    Serial.print(" | AcZ = ");
+    Serial.println(AcZ);
+    
+    Serial.println("Temperatura: ");
+    Serial.print("T= ");
+    Serial.println(temp/340.00+36.53);
+    
+    Serial.println("Giroscopo: ");
+    Serial.print("GyX = ");
+    Serial.print(GyX);
+    Serial.print(" | GyY = ");
+    Serial.print(GyY);
+    Serial.print(" | GyZ = ");
+    Serial.println(GyZ);
+  }
+  else {
+    Serial.print(milsec);
+    Serial.print(";");
+    Serial.print(AcX);
+    Serial.print(";");
+    Serial.print(AcY);
+    Serial.print(";");
+    Serial.print(AcZ);
+    
+    Serial.print(";");
+    Serial.print(temp/340.00+36.53);
+    
+    Serial.print(";");
+    Serial.print(GyX);
+    Serial.print(";");
+    Serial.print(GyY);
+    Serial.print(";");
+    Serial.println(GyZ);
+  }
   delay(333); 
 }
 

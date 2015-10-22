@@ -18,12 +18,17 @@ Los valores de este campo se relacionan con la escala y con la resolución segú
 El campo FS_SEL está formado por los bits 3 y 4 del registro GYRO_CONFIG, cuya dirección es 0x1B.
 
 ## Salidas del acelerómetro:
-Las salidas del acelerómetro, según el datasheet se representan en una unidad denominada LSB/g. El significado
-de la salida depende de un registro, que se denomina AFS_SEL y que puede tomar los siguientes valores:
-AFS_SEL = 0 --> Resolución de la salida 16,384 LSB/g
-AFS_SEL = 1 --> Resolución de la salida 8,192 LSB/g
-AFS_SEL = 2 --> Resolución de la salida 4,096 LSB/g
-AFS_SEL = 3 --> Resolución de la salida 2,048 LSB/g
+La resolución del acelerómetro y su escala de medida dependen de los valores del campo AFS_SEL.
+La relación entre los valores del campo y la escala y resolución del acelerómetro
+es la que se muestra en la siguiente tabla:
+|Valor AFS_SEL|Rango máximo de medida|Sensibilidad|
+|-------------|----------------------|------------|
+|0            | +-2g                 | 16384 LSB/g|
+|1            | +-4g                 | 8192 LSB/g |
+|2            | +-8g                 | 4096 LSB/g |
+|3            | +-16g                | 2048 LSB/g |
+
+Las salidas del acelerómetro, según el datasheet se representan en una unidad denominada LSB/g.
 
 Sabemos que la resolución de las salidas se representan en 16 bits en complemento a 2. Lo que provoca que tengamos
 un rango asimétrico de medidas que abarca desde:
