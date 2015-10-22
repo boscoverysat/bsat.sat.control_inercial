@@ -55,4 +55,29 @@ const int GYRO_Z_OUT_L=0x48;
   AFS_SEL = 2 --> +-8g
   AFS_SEL = 3 --> +-16g
 */
-const int ACCEL_CONFIG=0x81;
+const int ACCEL_CONFIG=0x1C;
+
+/*
+  GYRO_CONFIG: Este registro contiene la configuracion del giroscopo. Sirve para configurar la resolucion y sensibilidad
+  del giroscopo segun los valores del registro FS_SEL que se codifica en los bits 4 y 3. El contenido de este campo define
+  el rango maximo del sensor y su sensibilidad.
+  
+  Rango maximo de medida.
+  FS_SEL = 0 --> +- 250º/s 
+  FS_SEL = 1 --> +- 500º/s
+  FS_SEL = 2 --> +- 1000º/s 
+  FS_SEL = 3 --> +- 2000º/s
+  
+  Sensibilidad.
+  FS_SEL = 0 --> 131 LSB/(º/s)
+  FS_SEL = 1 --> 65.5 LSB/(º/s)
+  FS_SEL = 2 --> 32.8 LSB/(º/s) 
+  FS_SEL = 3 --> 16.4 LSB/(º/s)
+
+*/
+const int GYRO_CONFIG=0x1B;
+
+/*
+Mascara a aplicar para poder mostrar los valores de configuracion de acelerometro y giroscopo.
+*/
+const int FULL_SCALE_MASK=0x18;

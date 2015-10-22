@@ -60,6 +60,16 @@ void setup() {
   Serial.print("WHOAMI: ");
   Serial.println(valor,BIN);
   Serial.println("###################################################");
+  valor = valor & FULL_SCALE_MASK;
+
+  Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+  Serial.print("Mascara aplicada: ");
+  Serial.println(valor, BIN);
+  valor = valor >> 3;
+  Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+  Serial.print("Rotado 3>> ");
+  Serial.println(valor, BIN);
+  Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
   
   Wire.beginTransmission(MPU);
   Wire.write(ACCEL_CONFIG);
@@ -71,7 +81,29 @@ void setup() {
   Serial.print("ACCEL_CONFIG: ");
   Serial.println(valor, BIN);
   Serial.println("###################################################");
+  
+  valor = valor & FULL_SCALE_MASK;
+  Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+  Serial.print("Mascara aplicada: ");
+  Serial.println(valor, BIN);
+  valor = valor >> 3;
+  Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+  Serial.print("Rotado 3>> ");
+  Serial.println(valor, BIN);
+  Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
 
+
+  
+  Wire.beginTransmission(MPU);
+  Wire.write(GYRO_CONFIG);
+  Wire.endTransmission(false);
+  Wire.requestFrom(MPU, 1, true);
+  valor = Wire.read();
+  
+  Serial.println("###################################################");
+  Serial.print("ACCEL_CONFIG: ");
+  Serial.println(valor, BIN);
+  Serial.println("###################################################");
   
 }
 
