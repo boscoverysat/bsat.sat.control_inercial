@@ -21,6 +21,7 @@ El campo FS_SEL está formado por los bits 3 y 4 del registro GYRO_CONFIG, cuya 
 La resolución del acelerómetro y su escala de medida dependen de los valores del campo AFS_SEL.
 La relación entre los valores del campo y la escala y resolución del acelerómetro
 es la que se muestra en la siguiente tabla:
+
 |Valor AFS_SEL|Rango máximo de medida|Sensibilidad|
 |-------------|----------------------|------------|
 |0            | +-2g                 | 16384 LSB/g|
