@@ -28,6 +28,8 @@ es la que se muestra en la siguiente tabla:
 |2            | +-8g                 | 4096 LSB/g |
 |3            | +-16g                | 2048 LSB/g |
 
+El campo AFS_SEL está formado por los bits 3 y 4 del registro ACCEL_CONFIG, cuya dirección es 0x1C.
+
 Las salidas del acelerómetro, según el datasheet se representan en una unidad denominada LSB/g.
 
 Sabemos que la resolución de las salidas se representan en 16 bits en complemento a 2. Lo que provoca que tengamos
