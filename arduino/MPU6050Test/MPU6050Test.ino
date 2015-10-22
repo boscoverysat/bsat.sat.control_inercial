@@ -60,16 +60,7 @@ void setup() {
   Serial.print("WHOAMI: ");
   Serial.println(valor,BIN);
   Serial.println("###################################################");
-  valor = valor & FULL_SCALE_MASK;
 
-  Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-  Serial.print("Mascara aplicada: ");
-  Serial.println(valor, BIN);
-  valor = valor >> 3;
-  Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-  Serial.print("Rotado 3>> ");
-  Serial.println(valor, BIN);
-  Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
   
   Wire.beginTransmission(MPU);
   Wire.write(ACCEL_CONFIG);
@@ -83,14 +74,9 @@ void setup() {
   Serial.println("###################################################");
   
   valor = valor & FULL_SCALE_MASK;
-  Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-  Serial.print("Mascara aplicada: ");
-  Serial.println(valor, BIN);
   valor = valor >> 3;
-  Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-  Serial.print("Rotado 3>> ");
-  Serial.println(valor, BIN);
-  Serial.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+  print_accelerometer_settings(valor);
+
 
 
   
@@ -101,10 +87,11 @@ void setup() {
   valor = Wire.read();
   
   Serial.println("###################################################");
-  Serial.print("ACCEL_CONFIG: ");
+  Serial.print("GYRO_CONFIG: ");
   Serial.println(valor, BIN);
   Serial.println("###################################################");
-  
+  print_gyro_settings(valor);
+   
 }
 
 void loop() {
@@ -141,3 +128,82 @@ void loop() {
   Serial.println(GyZ);
   delay(333); 
 }
+
+void print_accelerometer_settings(int valor) {
+  String cad = "\tRango max de medida: ";
+  valor = valor & FULL_SCALE_MASK;
+  valor = valor >> 3;
+  if (valor == 0) {
+    cad += "+-2g\n";
+  }
+  else if (valor == 1) {
+    cad += "+-4g\n";
+  }
+  else if (valor == 2) {
+    cad += "+-8g\n";
+  }
+  else if (valor == 3) {
+    cad += "+-16g\n";
+  }
+  else {
+    cad += "[¡¡¡¡Error de config.!!!]\n";
+  }
+  cad += "\tSensitividad: ";
+  if (valor == 0) {
+    cad += "16384 LSB/g\n";
+  }
+  else if (valor == 1) {
+    cad += "8192 LSB/g\n";
+  }
+  else if (valor == 2) {
+    cad += "4096 LSB/g\n";
+  }
+  else if (valor == 3) {
+   cad += "2048 LSB/g\n";
+  }
+  else {
+    cad += "[¡¡¡¡Error de config.!!!]\n";
+  }
+ Serial.println(cad); 
+  
+}
+
+void print_gyro_settings(int valor) {
+  String cad = "\tRango max de medida: ";
+  valor = valor & FULL_SCALE_MASK;
+  valor = valor >> 3;
+  if (valor == 0) {
+    cad += "+-250º/s\n";
+  }
+  else if (valor == 1) {
+    cad += "+-500º/s\n";
+  }
+  else if (valor == 2) {
+    cad += "+-1000º/s\n";
+  }
+  else if (valor == 3) {
+    cad += "+-2000º/s\n";
+  }
+  else {
+    cad += "[¡¡¡¡Error de config.!!!]\n";
+  }
+  cad += "\tSensitividad: ";
+  if (valor == 0) {
+    cad += "131 LSB/(º/s)\n";
+  }
+  else if (valor == 1) {
+    cad += "65.5 LSB/(º/s)\n";
+  }
+  else if (valor == 2) {
+    cad += "32.8 LSB/(º/s)\n";
+  }
+  else if (valor == 3) {
+   cad += "16.4LSB/(º/s)\n";
+  }
+  else {
+    cad += "[¡¡¡¡Error de config.!!!]\n";
+  }
+ Serial.println(cad); 
+  
+}
+
