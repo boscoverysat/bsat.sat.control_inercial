@@ -18,7 +18,7 @@
 #include <Wire.h>
 
 int temp;
-unsigned int AcX, AcY, AcZ, GyX, GyY, GyZ; 
+int AcX, AcY, AcZ, GyX, GyY, GyZ; 
 int valor = 0;
 unsigned int milsec = 0;
 

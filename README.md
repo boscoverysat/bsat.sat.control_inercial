@@ -17,6 +17,10 @@ Los valores de este campo se relacionan con la escala y con la resolución segú
 
 El campo FS_SEL está formado por los bits 3 y 4 del registro GYRO_CONFIG, cuya dirección es 0x1B.
 
+Según el datasheet, las salidas del giróscopo se miden en una unidad denominada LSB/(º/s) por lo tanto, si la resolución configurada es de +-250º/s, la conversión a º/s se llevaría a cabo, dividiendo el valor de salida del sensor entre 131.
+
+Valor de salida del sensor / 131 = Valor en º/s
+
 ## Salidas del acelerómetro:
 La resolución del acelerómetro y su escala de medida dependen de los valores del campo AFS_SEL.
 La relación entre los valores del campo y la escala y resolución del acelerómetro
@@ -40,5 +44,6 @@ un rango asimétrico de medidas que abarca desde:
 
 La unidad LSB representa el valor del bit menos significativo.
 
-En el caso en el que AFS_SEL=0, tendremos una resolución de 16,384 LSB/g, por lo tanto, dividiremos 16,384/32765
-Lo que da como resultado: 0.0005000457805585228 lo que se correspondería con el valor de cada tramo del ADC.
+La conversión a g's se lleva a cabo dividiendo la lectura directa del sensor por 16384.
+
+Valor salida/16384 = Aceleración en g's
