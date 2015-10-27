@@ -7,7 +7,7 @@ Nombre: rdnewline (Remove Double Newline)
 Versión: 0.1
 Autor: BoscoverySAT - @codexlynx
 Fecha: 27/10/15
-Licencia: Creative Commos Share-Alike 3.0
+Licencia: Creative Commons Share-Alike 3.0
 
 Descripción:
 
